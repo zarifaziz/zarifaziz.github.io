@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Viewer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+    :root {
+      --bg-base: #f8f6f3;
+      --bg-card: #ffffff;
+      --bg-elevated: #f0ede8;
+      --bg-code: #fdfcfb;
+      --bg-header: #f5f3ef;
+      --border: #e0dcd4;
+      --border-strong: #ccc7bc;
+      --text: #2d2a26;
+      --text-2: #5c5650;
+      --text-3: #8a847a;
+      --accent: #5a7d9a;
+      --accent-hover: #4a6a84;
+      --purple: #7c6b9e;
+      --purple-bg: #f0ebf7;
+      --orange: #c47d3c;
+      --orange-bg: #fdf4ea;
+      --green: #5a8a6c;
+      --green-bg: #eef5f0;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 13px; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-base);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 12px;
+      min-height: 100vh;
+    }
+
+    #app {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+    }
+
+    .settings-panel summary {
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      list-style: none;
+    }
+    .settings-panel summary::-webkit-details-marker { display: none; }
+    .settings-panel summary::before {
+      content: '▸ ';
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .settings-panel[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .settings-content {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .settings-content label {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    .settings-content input {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 12px;
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      width: 100%;
+    }
+
+    .settings-content input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* Input Area */
+    .input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    textarea {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    textarea::placeholder {
+      color: var(--text-3);
+    }
+
+    button {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 20px;
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.15s;
+      align-self: flex-start;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Prompt Cards */
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .card[open] {
+      border-color: var(--border-strong);
+    }
+
+    .card > summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: var(--bg-card);
+      transition: background 0.15s;
+      list-style: none;
+    }
+    .card > summary::-webkit-details-marker { display: none; }
+
+    .card > summary:hover {
+      background: var(--bg-elevated);
+    }
+
+    .card[open] > summary {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--purple-bg);
+      color: var(--purple);
+      border: 1px solid rgba(179, 136, 255, 0.3);
+    }
+
+    .card-preview {
+      font-size: 12px;
+      color: var(--text-2);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 4px;
+      margin-left: auto;
+    }
+
+    .card-actions button {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .card-actions button:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .card-actions button.success {
+      background: var(--green-bg);
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    .card-actions button.editing {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+
+    .card-actions button.editing:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Edit mode */
+    .edit-textarea {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      padding: 0;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      resize: vertical;
+      min-height: 100px;
+      width: 100%;
+    }
+
+    .edit-textarea:focus {
+      outline: none;
+    }
+
+    .card-content {
+      padding: 14px;
+      background: var(--bg-base);
+    }
+
+    /* Prompt text styling */
+    .prompt-text {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: var(--text);
+    }
+
+    /* Mustache variable highlighting */
+    .mustache-var {
+      background: var(--orange-bg);
+      color: var(--orange);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 500;
+    }
+
+    /* Metadata Section */
+    .metadata-section {
+      margin-top: 12px;
+    }
+
+    .metadata-section summary {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      cursor: pointer;
+      padding: 8px 0;
+      list-style: none;
+    }
+    .metadata-section summary::-webkit-details-marker { display: none; }
+    .metadata-section summary::before {
+      content: '▸ ';
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .metadata-section[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .metadata-content {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: var(--text-2);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    /* Error message */
+    .error {
+      background: #3d1515;
+      border: 1px solid #ff4d4d;
+      color: #ff4d4d;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    /* KaTeX styling */
+    .katex { font-size: 1.05em; }
+    .katex-display { margin: 0.5em 0; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { 
+      background: var(--border-strong); 
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Prompt Viewer</h1>
+
+    <details class="settings-panel">
+      <summary>Settings</summary>
+      <div class="settings-content">
+        <label>Keys to extract (comma-separated):</label>
+        <input type="text" id="keys-input" value="system, user, rawOutput">
+      </div>
+    </details>
+
+    <div class="input-area">
+      <textarea id="json-input" placeholder="Paste raw JSON log here..."></textarea>
+      <button id="parse-btn">Parse & Render</button>
+    </div>
+
+    <div id="output"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script>
+    const jsonInput = document.getElementById('json-input');
+    const keysInput = document.getElementById('keys-input');
+    const parseBtn = document.getElementById('parse-btn');
+    const output = document.getElementById('output');
+
+    function getPromptKeys() {
+      return keysInput.value.split(',').map(k => k.trim()).filter(Boolean);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function highlightMustache(text) {
+      return escapeHtml(text).replace(
+        /\{\{([^}]+)\}\}/g,
+        '<span class="mustache-var">{{$1}}</span>'
+      );
+    }
+
+    function renderPromptCard(key, value) {
+      const card = document.createElement('details');
+      card.className = 'card';
+      card.open = true;
+
+      let currentValue = value;
+
+      const preview = String(value).substring(0, 80).replace(/\n/g, ' ');
+      
+      const summary = document.createElement('summary');
+      summary.innerHTML = `
+        <span class="card-label">${escapeHtml(key)}</span>
+        <span class="card-preview">${escapeHtml(preview)}${value.length > 80 ? '...' : ''}</span>
+        <div class="card-actions">
+          <button class="copy-btn" title="Copy to clipboard">📋</button>
+          <button class="edit-btn" title="Edit">✏️</button>
+        </div>
+      `;
+      card.appendChild(summary);
+
+      const content = document.createElement('div');
+      content.className = 'card-content';
+
+      const promptText = document.createElement('div');
+      promptText.className = 'prompt-text';
+      promptText.innerHTML = highlightMustache(currentValue);
+      content.appendChild(promptText);
+
+      card.appendChild(content);
+
+      // Copy button
+      const copyBtn = summary.querySelector('.copy-btn');
+      copyBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(currentValue);
+          copyBtn.textContent = '✓';
+          copyBtn.classList.add('success');
+          setTimeout(() => {
+            copyBtn.textContent = '📋';
+            copyBtn.classList.remove('success');
+          }, 1000);
+        } catch (err) {
+          console.error('Copy failed:', err);
+        }
+      });
+
+      // Edit button - toggle mode
+      const editBtn = summary.querySelector('.edit-btn');
+      let isEditing = false;
+      let textarea = null;
+
+      editBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        card.open = true;
+        
+        if (isEditing) {
+          exitEditMode();
+        } else {
+          enterEditMode();
+        }
+      });
+
+      function enterEditMode() {
+        isEditing = true;
+        editBtn.classList.add('editing');
+        editBtn.title = 'Save & exit edit mode';
+        
+        content.innerHTML = '';
+        textarea = document.createElement('textarea');
+        textarea.className = 'edit-textarea';
+        textarea.value = currentValue;
+        content.appendChild(textarea);
+
+        textarea.focus();
+        textarea.style.height = Math.max(100, textarea.scrollHeight) + 'px';
+      }
+
+      function exitEditMode() {
+        if (textarea) {
+          currentValue = textarea.value;
+        }
+        isEditing = false;
+        editBtn.classList.remove('editing');
+        editBtn.title = 'Edit';
+        
+        content.innerHTML = '';
+        const newPromptText = document.createElement('div');
+        newPromptText.className = 'prompt-text';
+        newPromptText.innerHTML = highlightMustache(currentValue);
+        content.appendChild(newPromptText);
+
+        // Re-render KaTeX
+        try {
+          renderMathInElement(newPromptText, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+          });
+        } catch (e) {
+          console.warn('KaTeX error:', e);
+        }
+        
+        textarea = null;
+      }
+
+      // Render KaTeX after adding to DOM
+      setTimeout(() => {
+        try {
+          renderMathInElement(promptText, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+          });
+        } catch (e) {
+          console.warn('KaTeX error:', e);
+        }
+      }, 0);
+
+      return card;
+    }
+
+    function renderMetadata(obj, promptKeys) {
+      const metadata = {};
+      for (const [k, v] of Object.entries(obj)) {
+        if (!promptKeys.includes(k)) {
+          metadata[k] = v;
+        }
+      }
+
+      if (Object.keys(metadata).length === 0) return null;
+
+      const section = document.createElement('details');
+      section.className = 'metadata-section';
+
+      const summary = document.createElement('summary');
+      summary.textContent = `Metadata (${Object.keys(metadata).length} fields)`;
+      section.appendChild(summary);
+
+      const content = document.createElement('div');
+      content.className = 'metadata-content';
+      content.textContent = JSON.stringify(metadata, null, 2);
+      section.appendChild(content);
+
+      return section;
+    }
+
+    function parseAndRender() {
+      const raw = jsonInput.value.trim();
+      if (!raw) {
+        output.innerHTML = '';
+        return;
+      }
+
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch (e) {
+        output.innerHTML = `<div class="error">Invalid JSON: ${escapeHtml(e.message)}</div>`;
+        return;
+      }
+
+      const promptKeys = getPromptKeys();
+      
+      const container = document.createElement('div');
+      container.className = 'cards-container';
+
+      // Render prompt cards for configured keys
+      for (const key of promptKeys) {
+        if (data[key] !== undefined && data[key] !== null) {
+          const value = typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key], null, 2);
+          container.appendChild(renderPromptCard(key, value));
+        }
+      }
+
+      // Render metadata section
+      const metadataSection = renderMetadata(data, promptKeys);
+      if (metadataSection) {
+        container.appendChild(metadataSection);
+      }
+
+      output.innerHTML = '';
+      output.appendChild(container);
+    }
+
+    parseBtn.addEventListener('click', parseAndRender);
+
+    // Allow Ctrl+Enter to parse
+    jsonInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        parseAndRender();
+      }
+    });
+  </script>
+</body>
+</html>
