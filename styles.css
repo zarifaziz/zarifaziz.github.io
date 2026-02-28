@@ -183,7 +183,8 @@ a:hover {
   border-top: 1px solid var(--border);
 }
 
-.item-list a {
+.item-list a,
+.item-list .item-title {
   color: var(--text);
   font-size: 0.95rem;
 }
