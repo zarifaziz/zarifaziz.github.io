@@ -10,7 +10,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,9 +18,9 @@
   <div class="container">
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
-      <a href="#" class="logo">Zarif Aziz</a>
+      <a href="#" class="logo">Zarif<br>Aziz</a>
       <div class="nav">
-        <a href="#now" class="active">Now</a>
+        <a href="#now">Now</a>
         <a href="#writing">Writing</a>
         <a href="#projects">Projects</a>
       </div>
@@ -31,96 +31,95 @@
       
       <!-- Now Section -->
       <section id="now" class="section">
-        <div class="section-anim anim-now"><div></div><div></div></div>
-        <h1 class="hero-title">
+        <h1 class="hero-title" data-reveal>
           AI Engineer,<br>
           <span class="muted">making LLMs do useful things.</span>
         </h1>
-        <p class="hero-description">
-          Lead AI Engineer at <a href="https://tutero.com" target="_blank">Tutero</a>, working across LLMs, ML systems, and scalable backend infrastructure. Previously shipped AI at Faethm by Pearson, Abyss Solutions, and presented at NVIDIA GTC.
+        <p class="hero-description" data-reveal>
+          Lead AI Engineer at <a href="https://tutero.com" target="_blank">Tutero</a>, working across LLMs, ML systems, and scalable backend infrastructure. Previously shipped AI at Pearson, Abyss Solutions, and presented at NVIDIA GTC.
         </p>
-        <p class="hero-description">
+        <p class="hero-description" data-reveal>
           Outside work: you can catch me in running shoes, chasing new travel spots, and hanging out with my cat.
         </p>
-        <p class="hero-location">Sydney, Australia</p>
+        <p class="hero-location" data-reveal>Sydney, Australia</p>
       </section>
 
       <!-- Writing Section -->
       <section id="writing" class="section">
-        <div class="section-header">
+        <div class="section-header" data-reveal data-scroll>
           <div class="section-anim anim-writing"><div></div><div></div><div></div></div>
           <h2 class="section-title">Writing</h2>
         </div>
         <ul class="item-list">
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://zarif-aziz.medium.com/bridging-the-gap-enterprise-architecture-for-python-engineers-c03c4b8db063" target="_blank">Enterprise Architecture for Python Engineers with DDD</a>
             <span class="item-meta">2024</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://zarif-aziz.medium.com/how-our-ai-app-got-crushed-by-shopify-magic-696eae5c4a5a" target="_blank">How our AI App got crushed by Shopify Magic</a>
             <span class="item-meta">2023</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://zarif-aziz.medium.com/tutorial-running-a-custom-stable-diffusion-img2img-pipeline-60f7cbd6766a" target="_blank">Custom Stable Diffusion Pipeline with GPUs</a>
             <span class="item-meta">2023</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://zarif-aziz.medium.com/2-key-changes-that-unlocked-huge-scale-in-our-distributed-machine-learning-data-pipeline-f0005714126d" target="_blank">2 Key Changes that Unlocked Huge Scale in our ML Pipeline</a>
             <span class="item-meta">2022</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://zarif-aziz.medium.com/chatgpt-what-it-could-mean-for-our-literacy-skills-3f758a95210e" target="_blank">What ChatGPT could mean for our literacy skills</a>
             <span class="item-meta">2023</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://zarifaziz08.wixsite.com/karakoram" target="_blank">Karakoram — Pakistan Travel Blog</a>
             <span class="item-meta">2021</span>
           </li>
         </ul>
-        <a href="https://zarif-aziz.medium.com/" target="_blank" class="more-link">more on Medium</a>
+        <a href="https://zarif-aziz.medium.com/" target="_blank" class="more-link" data-reveal data-scroll>more on Medium</a>
       </section>
 
       <!-- Projects Section -->
       <section id="projects" class="section">
-        <div class="section-header">
+        <div class="section-header" data-reveal data-scroll>
           <div class="section-anim anim-projects"><div></div><div></div><div></div></div>
           <h2 class="section-title">Projects</h2>
         </div>
         <ul class="item-list">
-          <li>
+          <li data-reveal data-scroll>
             <span class="item-title">Automated Clinical Protocol Generation</span>
             <span class="item-description">Currently building</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://www.linkedin.com/feed/update/urn:li:activity:6779923657465700352/" target="_blank">Flare Detection CNN</a>
             <span class="item-description">NVIDIA GTC 2021</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://github.com/zarifaziz/Cloud-Cover-Weather-model" target="_blank">Cloud Cover Weather Model</a>
             <span class="item-description">METAR data extraction</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://github.com/zarifaziz/img2img-pipeline" target="_blank">Stable Diffusion img2img Pipeline</a>
             <span class="item-description">Custom SD pipeline</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://github.com/zarifaziz/retell-ai-frontend-example" target="_blank">Voice AI Agent</a>
             <span class="item-description">Retell AI + Twilio</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://www.linkedin.com/posts/zarifaziz_ai-chatbot-search-activity-7231427220315979776-gLdH?utm_source=share&utm_medium=member_desktop&rcm=ACoAABUrDqIBxL8CPBaszBVzDbSwG8OuDRS9PB8" target="_blank">Q&A Search Bar</a>
             <span class="item-description">RAG + Text2SQL</span>
           </li>
-          <li>
+          <li data-reveal data-scroll>
             <a href="https://donkeycar.com" target="_blank">Self-Driving RC Car</a>
             <span class="item-description">Keras + OpenCV</span>
           </li>
         </ul>
-        <a href="https://github.com/zarifaziz" target="_blank" class="more-link">more on GitHub</a>
+        <a href="https://github.com/zarifaziz" target="_blank" class="more-link" data-reveal data-scroll>more on GitHub</a>
       </section>
 
       <!-- Footer -->
-      <footer class="footer">
+      <footer class="footer" data-reveal data-scroll>
         <div class="social-links">
           <a href="https://github.com/zarifaziz" target="_blank">GitHub</a>
           <a href="https://www.linkedin.com/in/zarifaziz/" target="_blank">LinkedIn</a>
@@ -130,5 +129,60 @@
 
     </main>
   </div>
+
+  <!-- Motion One (lightweight animation library by the Framer Motion creator) -->
+  <script type="module">
+    import { animate, stagger, scroll, inView } from "https://cdn.jsdelivr.net/npm/motion@11/+esm";
+
+    // --- Hero section: staggered spring reveal on page load ---
+    const heroElements = document.querySelectorAll('#now [data-reveal]');
+    animate(
+      heroElements,
+      { opacity: [0, 1], transform: ["translateY(20px)", "translateY(0)"] },
+      {
+        delay: stagger(0.12),
+        duration: 0.7,
+        easing: [0.22, 1, 0.36, 1],
+      }
+    );
+
+    // --- Scroll-triggered reveals for everything below the fold ---
+    const scrollElements = document.querySelectorAll('[data-scroll]');
+    scrollElements.forEach((el) => {
+      inView(el, () => {
+        animate(
+          el,
+          { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0)"] },
+          {
+            duration: 0.6,
+            easing: [0.22, 1, 0.36, 1],
+          }
+        );
+      }, { margin: "0px 0px -80px 0px" });
+    });
+
+    // --- Sidebar: subtle fade in ---
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+      sidebar.style.opacity = '0';
+      animate(
+        sidebar,
+        { opacity: [0, 1] },
+        { duration: 0.5, delay: 0.05, easing: "ease-out" }
+      );
+    }
+
+    // --- Active nav tracking on scroll ---
+    const navLinks = document.querySelectorAll('.nav a');
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section) => {
+      inView(section, (info) => {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const id = section.id;
+        const activeLink = document.querySelector(`.nav a[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }, { margin: "0px 0px -60% 0px" });
+    });
+  </script>
 </body>
 </html>

@@ -55,16 +55,16 @@ a:hover {
 .container {
   display: flex;
   min-height: 100vh;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
 /* ---------- Sidebar Navigation ---------- */
 .sidebar {
-  width: 200px;
+  width: 160px;
   flex-shrink: 0;
-  padding: 4rem 0;
+  padding: 4.5rem 2rem 4.5rem 3rem;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -73,25 +73,25 @@ a:hover {
 }
 
 .logo {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-family: 'Space Grotesk', var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 700;
   color: var(--text);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
   margin-bottom: 3rem;
-  letter-spacing: -0.02em;
 }
 
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
 .nav a {
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
   font-size: 0.95rem;
   color: var(--text-muted);
-  position: relative;
   transition: color 0.2s ease;
 }
 
@@ -100,28 +100,19 @@ a:hover {
   color: var(--text);
 }
 
-.nav a.active::before {
-  content: '';
-  position: absolute;
-  left: -1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 1.25rem;
-  background: var(--text);
-  border-radius: 2px;
-}
-
 /* ---------- Main Content ---------- */
 .main {
   flex: 1;
-  padding: 4rem 0 6rem 4rem;
-  max-width: 600px;
+  padding: 4.5rem 0 6rem 5rem;
+  max-width: 640px;
+  border-left: 1px solid var(--border);
+  margin-left: 0;
+  padding-left: 5rem;
 }
 
 /* ---------- Sections ---------- */
 .section {
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 }
 
 .section:last-child {
@@ -141,10 +132,10 @@ a:hover {
 /* ---------- Hero / Now Section ---------- */
 .hero-title {
   font-family: var(--font-serif);
-  font-size: 2.75rem;
+  font-size: 3.25rem;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
   margin-bottom: 1.5rem;
 }
 
@@ -154,15 +145,16 @@ a:hover {
 
 .hero-description {
   font-size: 1.05rem;
+  line-height: 1.75;
   color: var(--text-muted);
-  max-width: 520px;
-  margin-bottom: 0.5rem;
+  max-width: 560px;
+  margin-bottom: 0.75rem;
 }
 
 .hero-location {
   font-size: 0.9rem;
   color: var(--text-muted);
-  margin-top: 1rem;
+  margin-top: 1.25rem;
 }
 
 /* ---------- List Items (Writing, Projects, Tools) ---------- */
@@ -263,6 +255,7 @@ a:hover {
 
   .logo {
     margin-bottom: 0;
+    font-size: 1.5rem;
   }
 
   .nav {
@@ -270,18 +263,17 @@ a:hover {
     gap: 1.5rem;
   }
 
-  .nav a.active::before {
-    display: none;
-  }
-
   .main {
-    padding: 2rem 0;
+    padding: 2rem 0 4rem;
     max-width: 100%;
+    border-left: none;
+    padding-left: 0;
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
+
 }
 
 @media (max-width: 600px) {
@@ -303,7 +295,7 @@ a:hover {
   }
 
   .hero-title {
-    font-size: 1.75rem;
+    font-size: 1.85rem;
   }
 }
 
@@ -327,202 +319,142 @@ a:hover {
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
-  background: var(--bg-subtle);
 }
 
-/* Now section — morphing gradient orb */
-.anim-now {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  margin-bottom: 1.25rem;
+
+/* ── Writing section — typing cursor with lines ── */
+.anim-writing {
   background: #1c1917;
 }
 
-.anim-now div:first-child {
+.anim-writing div:nth-child(1),
+.anim-writing div:nth-child(2),
+.anim-writing div:nth-child(3) {
   position: absolute;
-  width: 36px;
-  height: 36px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #a8a29e, #57534e 60%, #1c1917);
-  animation: orbPulse 4s ease-in-out infinite;
+  left: 10px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: #78716c;
 }
 
-.anim-now div:last-child {
+.anim-writing div:nth-child(1) {
+  top: 14px;
+  width: 28px;
+  animation: typeReveal 2.5s ease-in-out infinite;
+}
+
+.anim-writing div:nth-child(2) {
+  top: 22px;
+  width: 20px;
+  animation: typeReveal 2.5s ease-in-out infinite 0.5s;
+}
+
+.anim-writing div:nth-child(3) {
+  top: 30px;
+  width: 24px;
+  animation: typeReveal 2.5s ease-in-out infinite 1s;
+}
+
+.anim-writing::after {
+  content: '';
   position: absolute;
+  top: 13px;
+  left: 10px;
+  width: 1.5px;
+  height: 10px;
+  background: #d6d3d1;
+  animation: cursorBlink 1s step-end infinite, cursorMove 2.5s ease-in-out infinite;
+}
+
+@keyframes typeReveal {
+  0% { width: 0; opacity: 0; }
+  20% { opacity: 0.6; }
+  50% { width: 28px; opacity: 0.6; }
+  80% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes cursorMove {
+  0% { left: 10px; top: 13px; }
+  33% { left: 38px; top: 13px; }
+  34% { left: 10px; top: 21px; }
+  66% { left: 30px; top: 21px; }
+  67% { left: 10px; top: 29px; }
+  100% { left: 34px; top: 29px; }
+}
+
+/* ── Projects section — spinning 3D cube wireframe ── */
+.anim-projects {
+  background: #0a0a0a;
+  perspective: 120px;
+}
+
+.anim-projects div {
+  position: absolute;
+  border: 1px solid #57534e;
+  background: transparent;
+}
+
+.anim-projects div:nth-child(1) {
   width: 20px;
   height: 20px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle at 60% 40%, #d6d3d1, #78716c);
-  animation: orbPulse 4s ease-in-out infinite reverse;
-  mix-blend-mode: screen;
-}
-
-@keyframes orbPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); border-radius: 50%; }
-  25% { transform: translate(-45%, -55%) scale(1.15); border-radius: 45% 55% 50% 50%; }
-  50% { transform: translate(-55%, -50%) scale(0.9); border-radius: 50% 45% 55% 50%; }
-  75% { transform: translate(-50%, -45%) scale(1.1); border-radius: 55% 50% 45% 55%; }
-}
-
-/* Writing section — animated lines */
-.anim-writing {
-  background: #fafaf9;
-  border: 1px solid var(--border);
-}
-
-.anim-writing div {
-  position: absolute;
-  left: 10px;
-  height: 2px;
-  background: #a8a29e;
-  border-radius: 1px;
-  animation: writeLine 3s ease-in-out infinite;
-}
-
-.anim-writing div:nth-child(1) {
-  top: 14px;
-  width: 0;
-  animation-delay: 0s;
-}
-
-.anim-writing div:nth-child(2) {
-  top: 22px;
-  width: 0;
-  animation-delay: 0.4s;
-}
-
-.anim-writing div:nth-child(3) {
-  top: 30px;
-  width: 0;
-  animation-delay: 0.8s;
-}
-
-@keyframes writeLine {
-  0%, 100% { width: 0; opacity: 0; }
-  15% { opacity: 1; }
-  40% { width: 28px; opacity: 1; }
-  60% { width: 20px; opacity: 0.6; }
-  80% { width: 28px; opacity: 0.3; }
-  95% { opacity: 0; }
-}
-
-/* Projects section — rotating nodes */
-.anim-projects {
-  background: #1c1917;
-}
-
-.anim-projects div {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #a8a29e;
-}
-
-.anim-projects div:nth-child(1) {
-  top: 12px;
-  left: 21px;
-  animation: nodeOrbit1 5s linear infinite;
+  animation: cubeRotate 8s linear infinite;
+  transform-style: preserve-3d;
 }
 
 .anim-projects div:nth-child(2) {
-  top: 28px;
-  left: 12px;
-  animation: nodeOrbit2 5s linear infinite;
-}
-
-.anim-projects div:nth-child(3) {
-  top: 28px;
-  left: 30px;
-  animation: nodeOrbit3 5s linear infinite;
-}
-
-.anim-projects::after {
-  content: '';
-  position: absolute;
+  width: 14px;
+  height: 14px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 30px;
-  height: 30px;
-  border: 1px solid #44403c;
-  border-radius: 50%;
-  animation: ringPulse 5s ease-in-out infinite;
+  border-color: #78716c;
+  animation: cubeRotate 8s linear infinite reverse;
 }
 
-@keyframes nodeOrbit1 {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(4px, 6px); }
-  50% { transform: translate(-2px, 8px); }
-  75% { transform: translate(-4px, 2px); }
+.anim-projects div:nth-child(3) {
+  width: 26px;
+  height: 26px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-color: #44403c;
+  animation: cubeRotate 12s linear infinite;
+  opacity: 0.5;
 }
 
-@keyframes nodeOrbit2 {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(6px, -2px); }
-  50% { transform: translate(8px, 4px); }
-  75% { transform: translate(2px, 6px); }
+@keyframes cubeRotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg); border-radius: 0; }
+  25% { border-radius: 2px; }
+  50% { transform: translate(-50%, -50%) rotate(180deg); border-radius: 50%; }
+  75% { border-radius: 2px; }
+  100% { transform: translate(-50%, -50%) rotate(360deg); border-radius: 0; }
 }
 
-@keyframes nodeOrbit3 {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(-4px, -4px); }
-  50% { transform: translate(-6px, 2px); }
-  75% { transform: translate(2px, -6px); }
-}
-
-@keyframes ringPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; }
-}
-
-/* ---------- Progressive Text Reveal ---------- */
-@keyframes revealUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.section-anim,
-.section-header {
+/* ---------- Motion One Reveal ---------- */
+/* Elements start hidden, Motion One animates them in */
+[data-reveal] {
   opacity: 0;
-  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateY(20px);
 }
-
-#now .section-anim        { animation-delay: 0.1s; }
-#now .hero-title           { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
-#now .hero-description:nth-of-type(1) { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards; }
-#now .hero-description:nth-of-type(2) { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards; }
-#now .hero-location        { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards; }
-
-#writing .section-header   { animation-delay: 0.15s; }
-#writing .item-list        { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
-#writing .more-link        { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-
-#projects .section-header  { animation-delay: 0.15s; }
-#projects .item-list       { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
-#projects .more-link       { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
 
 .item-list li {
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .item-list li:hover {
   background: var(--bg-subtle);
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+}
+
+/* No-JS fallback: if script doesn't load, show content */
+@media (scripting: none) {
+  [data-reveal] { opacity: 1; transform: none; }
 }
